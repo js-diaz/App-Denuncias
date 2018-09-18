@@ -3,6 +3,14 @@ import React, {Component} from "react";
 
 class Denuncias extends Component {
 
+  //Zulma: Hola Juan! esto es react! y se que estamos cortos de tiempo pero podias haber hecho esto de una mejor manera creando un objeto con las denuncias
+  // y dejando que react lo recorriera renderizandolo, yo lo hice para el carrusel de mi proyecto, te dejo el link donde puedes ver el ejemplo. 
+  // Hace que tu codigo sea mucho mas reutilizable y te facilita a futuro el manejo de la base de datos 
+  // https://github.com/zlcastaneda10/Swipe-and-Swap/blob/master/front/src/containers/LandingPage.js
+  // revisa la lista de items y la forma en que mapeo los slides 
+  //const slides = items.map((item) => {
+  
+  
 render() { 
   return (
     <div class="container-fuid mr-sm-0 pt-md-4">
