@@ -1,3 +1,7 @@
+// Zulma : react-bootstrap cumple su cometido (yo use reacstrap para la version 4 de bootstrap) sin embargo puede hacer tu pagina muy lenta 
+// o generar problemas con la manipulacion del DOM (A mi por ejemplo me añadia estilos que no sabia ni donde estaban) 
+
+
 import React, {Component} from 'react';
 import {Button, FormGroup, FormControl, ControlLabel} from "react-bootstrap";
 import { Redirect } from "react-router-dom";
@@ -48,6 +52,7 @@ export default class Login extends Component {
                                 autoFocus
                                 type="email"
                                 value={this.state.email}
+            //Zulma :interesante forma de ver el cambio en los valores, tomando todo el formulario en conjunto
                                 onChange={this.handleChange}
                             />
                         </FormGroup>
