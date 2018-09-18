@@ -3,7 +3,7 @@ const router = express.Router();
 
 const MongoClient = require('mongodb').MongoClient;
 const assert = require('assert');
-// Connection URL
+// Connection URL (Zulma: No deberias usar variables de entorno aqui?) 
 const url = 'mongodb://localhost:27017';
 // Database Name
 const dbName = 'appDenuncias';
@@ -38,7 +38,7 @@ function getAllRobos(filter, cb) {
 
 //Denunciar un robo
 const insertDocument = function (data, db, callback) {
-  // Get the documents collection
+  // Get the documents collection zulma: Evita quemar en el codigo este tipo de cosas, crea una constante y utilizala (o usa variabels de entorno)
   const collection = db.collection('robos');
   // Insert some documents
   collection.insertOne(data, function (err, result) {
