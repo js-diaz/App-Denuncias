@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 
 
-class Denuncias extends Component {
+class MiCuenta extends Component {
 
 render() { 
   return (
@@ -75,4 +75,4 @@ render() {
     );
   }
 }
-export default Denuncias;
+export default MiCuenta;

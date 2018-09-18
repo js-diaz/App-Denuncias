@@ -37,7 +37,7 @@ function getAllUsers(cb) {
 }
 
 //Get a user for login
-function getUser(email, pass, cb) {
+function getUser(correo, pass, cb) {
   // Use connect method to connect to the server
   MongoClient.connect(url, function (err, client) {
     assert.equal(null, err);
@@ -45,10 +45,11 @@ function getUser(email, pass, cb) {
 
     const db = client.db(dbName);
     findDocuments({
-      'email': email,
-      'contraseña': pass
+      'correo': correo,
+      'password': pass
     }, db, (data) => {
       cb(data);
+      console.log(data)
       client.close();
     });
   });
@@ -76,17 +77,19 @@ function newUser(data, cb) {
 
     const db = client.db(dbName);
     findDocuments({
-      'email': data.email
+      'correo': data.correo
     }, db, (res) => {
-      if (res === []) {
+      console.log(res);
+      if (res.lenght > 0) {
+        cb('correo already exists');
+        console.log('ya existe')
+        client.close();        
+      }
+      else{        
         insertDocuments(data, db, (res) => {
           cb(res);
           client.close();
         });
-      }
-      else{
-        cb('email already exists');
-        client.close();
       }
     });
   });
@@ -98,15 +101,16 @@ function newUser(data, cb) {
 //  res.setHeader('Content-Type', 'application/json');
 //  getAllUsers((data) => res.send(data));
 //});
-router.get('/login', function (req, res) {
+router.post('/login', function (req, res) {
+  console.log(req.body.correo);
   res.setHeader('Content-Type', 'application/json');
-  getUser(req.body.email, req.body.contraseña, (result) => res.send(result));
+  getUser(req.body.correo, req.body.password, (result) => res.send(result));
 });
 
 router.post('/', function (req, res) {
   res.setHeader('Content-Type', 'application/json');
   newUser(req.body, (result) => res.send({
-    'exists': (result !== []),
+    'exists': (result.lenght > 0),
     'user': result[0]
   }));
 });

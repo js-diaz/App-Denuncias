@@ -2,14 +2,16 @@ import React, {Component} from "react";
 
 class NavBar extends Component {
 
-     constructor(props) {
-         super(props);
-         
-         this.state = {
-           onChange: props.onChange
-         };
-     }
-  
+    constructor(props) {
+    super(props);
+    
+    this.state = {
+      onChange: props.onChange,
+      onLogOut: props.onLogOut
+    };
+
+}
+
     render() {
       return (
           <div>
@@ -25,24 +27,19 @@ class NavBar extends Component {
                     </li>                    
                     <li className="nav-item">
                       <a className="nav-link" onClick={this.state.onChange.bind(this, 'Contactenos')} href={'#'}>¡Contáctenos!</a>
-                    </li>            
-
+                    </li>
+                    <li className="nav-item">
+                       <a className="nav-link" onClick={this.state.onChange.bind(this, 'MiCuenta')} href={'#'}>Mi cuenta</a>
+                    </li>               
                   </ul>                  
                 </div>
                    <div className="navbar-collapse collapse w-100 order-3">
-                    <ul className="navbar-nav ml-auto list-inline">
-                      <li className="nav-item list-inline-item">
-                           <a className="nav-link" onClick={this.state.onChange.bind(this, 'Login')}  href={'#'}>
-                           <i className="fas fa-user-circle"></i> <br/>
-                                Login 
-                            </a>
-                        </li> 
-                        <li className="nav-item list-inline-item">
-                           <a className="nav-link" onClick={this.state.onChange.bind(this, 'SignUp')}  href={'#'}>
-                           <i className="fas fa-sign-in-alt"></i> <br/>
-                                Sign Up
-                            </a>
-                        </li>                    
+                    <ul className="navbar-nav ml-auto list-inline">  
+                      <li className="nav-item">
+                          <a className="nav-link" onClick={this.state.onLogOut.bind(this)} href={'#'}> 
+                          <i className="fas fa-door-open"></i> <br/>
+                          Logout</a>
+                      </li>                              
                       <li className="nav-item list-inline-item">
                         <a className="nav-link" onClick={this.state.onChange.bind(this, 'Denuncia')}  href={'#'}>
                         <i className="fas fa-exclamation-circle"></i> <br/> Denuncie! 
@@ -51,7 +48,7 @@ class NavBar extends Component {
                     </ul>            
                 </div>
               </div>
-            </nav>         
+            </nav>                   
           </div>
       );        
     }

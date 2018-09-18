@@ -12,9 +12,7 @@ export default class SignUp extends Component {
         this.state = {
             nombre: "",
             password: "",
-            correo: "",            
-            onSubmit: this.props.onSubmit,
-            redirectToHome: false
+            correo: ""
         };
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -43,16 +41,17 @@ export default class SignUp extends Component {
         .send(body)
         .end((err, res)=>{
           console.log(res);
-          this.setState({redirectToHome: true});
+          if(res.exists === "true")
+          {
+             alert('Ya existe un usuario con ese correo. Trate de nuevo');
+          }
+
+          this.props.onSubmit();            
+
         });
     }
 
     render() {
-        if (this.state.redirectToHome) {
-          return (
-            <Redirect to={"/"}/>
-          );
-        }
         return (
             <div className="container-fluid banner">
                 <div className="row justify-content-around banner-content center-items">
@@ -93,7 +92,6 @@ export default class SignUp extends Component {
                         </Button>
                     </form>
                 </div>
-                <Route exact path="/" component={Home}/>
             </div>
         );
     }

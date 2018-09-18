@@ -52,7 +52,7 @@ function insertIntoUser(data, db, callback) {
   // Get the documents collection
   const collection = db.collection('users');
   collection.updateOne({
-    'user' : data.user
+    '_id' : data.user
   }, {
     $push: { robos : data }
   }, function (err, result) {
@@ -69,11 +69,10 @@ function newRobo(data, cb) {
 
     const db = client.db(dbName);
     insertDocument(data, db, (res) => {
-      cb(res);
-      insertIntoUser(data, db, (res) => {
-        cb(res);
+      insertIntoUser(data, db, (res) => {      
         client.close();
       });
+      cb(res);
     });
   });
 }
@@ -83,7 +82,7 @@ function insertReporte(roboId, data, db, callback) {
   // Get the documents collection
   const collection = db.collection('robos');
   collection.updateOne({
-    'id': roboId
+    '_id': roboId
   }, {
     $push: { 'reportes' : data }
   }, function (err, result) {
