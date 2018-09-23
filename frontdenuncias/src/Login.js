@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {Button, FormGroup, FormControl, ControlLabel} from "react-bootstrap";
-import request from "superagent";
 
 
 export default class Login extends Component {
@@ -30,25 +29,31 @@ export default class Login extends Component {
           password: this.state.password        
         });
         console.log(body);
-        request
-          .post("users/login/")
-          .set("Content-Type", "application/json")
-          .send(body)
-          .end((err, res)=>{
-            console.log(res.body);
-            if(res.body.length > 0)
-            {
-                console.log(res.body[0]._id);
-                this.props.onLogin(this.state.correo, res.body[0]._id);                
-                           
-            }
-            else{
-                this.props.onLogin(null,null);
-                 alert('Error en usuario o password');           
-               
-            }
-            
+
+        fetch('/users/login/', {
+              method: 'POST',
+              body: body,
+              headers: {
+                'Content-Type': 'application/json'
+              }
+            }).then(response => {
+              console.log(response);
+              response.json().then(json => {
+                console.log(json);
+                if(json.length > 0)
+                {
+                    console.log(json[0]._id);
+                    this.props.onLogin(this.state.correo, json[0]._id);                    
+                }
+                else{
+                    this.props.onLogin(null,null);
+                     alert('Error en usuario o password');         
+                }
+                
+             });
+        
           });
+       
     }
 
     render() {
@@ -59,8 +64,9 @@ export default class Login extends Component {
                         <FormGroup controlId="correo" bsSize="large">
                             <ControlLabel className="auth-text">Correo</ControlLabel>
                             <FormControl
+                                type="email"
                                 autoFocus
-                                type="correo"
+                                componentClass="input"                               
                                 value={this.state.correo}
                                 onChange={this.handleChange}
                             />
@@ -68,9 +74,9 @@ export default class Login extends Component {
                         <FormGroup controlId="password" bsSize="large">
                             <ControlLabel className="auth-text">Password</ControlLabel>
                             <FormControl
-                                value={this.state.password}
-                                onChange={this.handleChange}
                                 type="password"
+                                value={this.state.password}
+                                onChange={this.handleChange}                                
                             />
                         </FormGroup>
                         <Button

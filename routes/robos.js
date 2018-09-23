@@ -1,12 +1,14 @@
 const express = require('express');
 const router = express.Router();
+var env = require('node-env-file');
 
 const MongoClient = require('mongodb').MongoClient;
 const assert = require('assert');
+
 // Connection URL
-const url = 'mongodb://localhost:27017';
-// Database Name
-const dbName = 'appDenuncias';
+env('./.env');
+const url = process.env.MONGODB_URI;
+const dbName = process.env.DB_NAME;
 
 //Pedir todos los robos
 const findDocuments = function (db, filter, callback) {
@@ -108,7 +110,16 @@ function newReporte(id, data, cb) {
 //Pathnames
 router.get('/', function (req, res) {
   res.setHeader('Content-Type', 'application/json');
-  getAllRobos(req.filter, (data) => res.send(data));
+  console.log(req.query);
+  let filter = {};
+  if(req.query.user)
+  {
+    filter ={
+        'user': req.query.user        
+      }
+  }
+  console.log(filter);
+  getAllRobos(filter, (data) => res.send(data));
 });
 
 router.post('/', function (req, res) {

@@ -77,7 +77,7 @@ render() {
     } else if(this.state.ubicacion === 'SignUp'){
       tab = <SignUp onSubmit = {this.login}/>;
     } else if(this.state.ubicacion === 'MiCuenta'){
-      tab = <MiCuenta user = {this.state.correo}/>;
+      tab = <MiCuenta user = {this.state.id}/>;
     } else if(this.state.ubicacion === 'Denuncia') {
       tab = <Denuncia onSubmit = {this.handleCrearDenuncia} user= {this.state.correo} id={this.state.id}/>;
     } 

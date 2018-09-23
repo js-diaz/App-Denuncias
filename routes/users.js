@@ -1,12 +1,14 @@
 const express = require('express');
 const router = express.Router();
+var env = require('node-env-file');
 
 const MongoClient = require('mongodb').MongoClient;
 const assert = require('assert');
+
 // Connection URL
-const url = 'mongodb://localhost:27017';
-// Database Name
-const dbName = 'appDenuncias';
+env('./.env');
+const url = process.env.MONGODB_URI;
+const dbName = process.env.DB_NAME;
 
 //Pedir todos los users
 const findDocuments = function (obj, db, callback) {

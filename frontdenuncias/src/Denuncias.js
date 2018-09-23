@@ -1,5 +1,4 @@
 import React, {Component} from "react";
-import request from "superagent";
 
 class Denuncias extends Component {
 
@@ -51,10 +50,9 @@ class Denuncias extends Component {
 
 render() { 
   return (
-    <div className="container-fuid">
-      <div className="row">
-        <div className="col offset-md-4">
-           <h4 className="myFont">Denuncias realizadas en los últimos días</h4>
+    <div className="container-fuid mt-5 pt-1">
+      <div className="row align-items-center">
+        <div className="col">
            <h4 className="myFont">Denuncias realizadas en los últimos días</h4>
         </div>   
       </div>

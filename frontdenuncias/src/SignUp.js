@@ -1,9 +1,5 @@
 import React, {Component} from 'react';
 import {Button, FormGroup, FormControl, ControlLabel} from "react-bootstrap";
-import request from "superagent";
-import { Redirect } from "react-router-dom";
-import {Route} from "react-router-dom";
-import Home from "./Home.js";
 
 export default class SignUp extends Component {
     constructor(props) {
@@ -35,20 +31,28 @@ export default class SignUp extends Component {
         password: this.state.password        
       });
       console.log(body);
-      request
-        .post("/users/")
-        .set("Content-Type", "application/json")
-        .send(body)
-        .end((err, res)=>{
-          console.log(res);
-          if(res.exists === "true")
-          {
-             alert('Ya existe un usuario con ese correo. Trate de nuevo');
-          }
 
-          this.props.onSubmit();            
+      fetch('/users/', {
+            method: 'POST',
+            body: body,
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          }).then(response => {
+            console.log(response);
+            response.json().then(json => {
+              console.log(json);
+              if(json.exists === "true")
+              {
+                 alert('Ya existe un usuario con ese correo. Trate de nuevo');
+              }
 
+              this.props.onSubmit();
+              
+           });
+      
         });
+     
     }
 
     render() {
@@ -59,8 +63,8 @@ export default class SignUp extends Component {
                         <FormGroup controlId="nombre" bsSize="large">
                             <ControlLabel className="auth-text">Name</ControlLabel>
                             <FormControl
-                                autoFocus
-                                type="nombre"
+                                type="text"
+                                autoFocus                                
                                 value={this.state.nombre}
                                 onChange={this.handleChange}
                             />
@@ -68,8 +72,8 @@ export default class SignUp extends Component {
                         <FormGroup controlId="correo" bsSize="large">
                             <ControlLabel className="auth-text">Correo</ControlLabel>
                             <FormControl
-                                autoFocus
-                                type="correo"
+                                type="email"
+                                autoFocus                                
                                 value={this.state.correo}
                                 onChange={this.handleChange}
                             />
@@ -77,9 +81,9 @@ export default class SignUp extends Component {
                         <FormGroup controlId="password" bsSize="large">
                             <ControlLabel className="auth-text">Password</ControlLabel>
                             <FormControl
-                                value={this.state.password}
-                                onChange={this.handleChange}
                                 type="password"
+                                value={this.state.password}
+                                onChange={this.handleChange}                                
                             />
                         </FormGroup>
                         <Button
