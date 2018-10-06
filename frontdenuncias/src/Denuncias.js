@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 
 class Denuncias extends Component {
-
+//Zulma: probando que hice mal 
   constructor(props) {
     super(props);
 
